@@ -69,6 +69,7 @@ export const KamolonCanvas: React.FC<KamolonCanvasProps> = ({
     actionTimer: 0,
     customerX: 1.12,
     keys: new Set<string>(),
+    touchTargetX: null as number | null,
     lastActionKey: 0,
     lastCustomerId: '',
     particles: Array.from({ length: PARTICLE_POOL_SIZE }, (): Particle => ({
@@ -229,18 +230,22 @@ export const KamolonCanvas: React.FC<KamolonCanvasProps> = ({
         }
 
         if (manualDir !== 0) {
+          sim.touchTargetX = null;
           const prevX = sim.baristaX;
           sim.baristaX = Math.max(0.08, Math.min(0.92, sim.baristaX + manualDir * 0.48 * dt));
           sim.baristaFacing = manualDir > 0 ? 1 : -1;
           sim.walkPhase += Math.abs(sim.baristaX - prevX) * 58;
         } else {
-          // Smooth walk to target bar station
-          const diff = targetX - sim.baristaX;
+          // Smooth walk to tapped canvas spot or active ingredient station
+          const destX = sim.touchTargetX ?? targetX;
+          const diff = destX - sim.baristaX;
           if (Math.abs(diff) > 0.004) {
             const step = Math.sign(diff) * Math.min(Math.abs(diff), 0.55 * dt);
             sim.baristaX += step;
             sim.baristaFacing = diff > 0 ? 1 : -1;
             sim.walkPhase += Math.abs(step) * 58;
+          } else if (sim.touchTargetX !== null) {
+            sim.touchTargetX = null;
           }
         }
 
@@ -716,15 +721,24 @@ export const KamolonCanvas: React.FC<KamolonCanvasProps> = ({
     };
   }, []);
 
+  const handleCanvasPointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (propsRef.current.gameState !== 'playing') return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    if (rect.width <= 0) return;
+    const normX = Math.max(0.08, Math.min(0.92, (e.clientX - rect.left) / rect.width));
+    simRef.current.touchTargetX = normX;
+  };
+
   return (
     <div
       ref={containerRef}
       data-testid="kamolon-stage"
-      className="relative w-full h-56 md:h-64 rounded-xl overflow-hidden border border-[#5a3d28] bg-[#1b1410]"
+      className="relative w-full h-36 sm:h-52 md:h-60 rounded-xl overflow-hidden border border-[#5a3d28] bg-[#1b1410]"
     >
       <canvas
         ref={canvasRef}
-        className="w-full h-full block"
+        onPointerDown={handleCanvasPointerDown}
+        className="w-full h-full block touch-pan-y cursor-pointer"
         aria-label="Kamolon lokantasi bar sahnasi"
       />
       <div className="hidden sm:block pointer-events-none absolute bottom-2 left-3 text-[11px] text-[#e7d8c3]/85 bg-[#1b1410]/85 px-2 py-0.5 rounded">

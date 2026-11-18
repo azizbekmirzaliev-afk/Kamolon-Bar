@@ -66,21 +66,21 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
   const catMeta = DRINK_CATEGORIES.find((c) => c.id === recipe.category);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4">
       {/* Left: Customer Order & Optional Hint */}
-      <div className="lg:col-span-5 border border-[#5a3d28] bg-[#241a14] rounded-xl p-4 flex flex-col justify-between">
+      <div className="lg:col-span-5 border border-[#5a3d28] bg-[#241a14] rounded-xl p-3 sm:p-4 flex flex-col justify-between">
         <div>
-          <div className="flex items-start justify-between gap-3 pb-3 border-b border-[#3d2b1f]">
-            <div>
-              <div className="text-xs text-[#cbb08c]">
+          <div className="flex items-start justify-between gap-2 pb-2.5 sm:pb-3 border-b border-[#3d2b1f]">
+            <div className="min-w-0">
+              <div className="text-[11px] sm:text-xs text-[#cbb08c] truncate">
                 <span>{customer.name}</span>
                 <span aria-hidden="true"> · </span>
                 <span>{customer.role}</span>
               </div>
-              <h2 className="font-display text-xl md:text-2xl font-bold text-[#fef3c7] mt-0.5">
+              <h2 className="font-display text-lg sm:text-2xl font-bold text-[#fef3c7] mt-0.5 truncate">
                 {recipe.name}
               </h2>
-              <div className="text-xs text-[#f59e0b] font-medium mt-0.5">
+              <div className="text-[11px] sm:text-xs text-[#f59e0b] font-medium mt-0.5">
                 {catMeta?.label}
                 {portionLabel ? ` · ${portionLabel}` : ''}
                 {recipe.volumeNote ? ` · ${recipe.volumeNote}` : ''}
@@ -90,7 +90,7 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
             <button
               type="button"
               onClick={() => setShowHint((prev) => !prev)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#2f2119] hover:bg-[#3d2b20] border border-[#5a3d28] text-xs font-medium text-[#e7d8c3] whitespace-nowrap shrink-0 cursor-pointer"
+              className="min-h-[40px] sm:min-h-0 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#2f2119] hover:bg-[#3d2b20] border border-[#5a3d28] text-xs font-medium text-[#e7d8c3] whitespace-nowrap shrink-0 cursor-pointer"
               aria-label={showHint ? "Retsept yordamini yashirish" : "Retsept yordamini ko'rsatish"}
             >
               {showHint ? (
@@ -101,43 +101,43 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
               ) : (
                 <>
                   <Eye className="w-3.5 h-3.5 text-[#f59e0b]" />
-                  <span>Retsept ko‘rish</span>
+                  <span>Retsept ({recipe.ingredients.length})</span>
                 </>
               )}
             </button>
           </div>
 
           {recipe.servingNote && (
-            <div className="mt-2.5 text-xs text-[#fde68a] bg-[#362519] border border-[#6e4c32] rounded-lg px-3 py-2">
+            <div className="mt-2 text-[11px] sm:text-xs text-[#fde68a] bg-[#362519] border border-[#6e4c32] rounded-lg px-2.5 py-1.5 sm:px-3 sm:py-2">
               Eslatma: {recipe.servingNote}
             </div>
           )}
 
           {/* Recipe Checklist Hint */}
           {showHint ? (
-            <div className="mt-3">
-              <div className="text-xs font-semibold text-[#cbb08c] mb-2">
+            <div className="mt-2.5 sm:mt-3">
+              <div className="text-[11px] sm:text-xs font-semibold text-[#cbb08c] mb-1.5 sm:mb-2">
                 Kerakli masalliqlar ({recipe.ingredients.length} ta):
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-60 overflow-y-auto pr-1">
+              <div className="grid grid-cols-2 gap-1.5 max-h-48 sm:max-h-60 overflow-y-auto pr-1">
                 {recipe.ingredients.map((req) => {
                   const ing = getIngredientById(req.ingredientId);
                   const isAdded = selectedIngredientIds.includes(req.ingredientId);
                   return (
                     <div
                       key={req.ingredientId}
-                      className={`flex items-center gap-2 px-2 py-1.5 rounded-lg border text-xs ${
+                      className={`flex items-center gap-1.5 sm:gap-2 px-2 py-1.5 rounded-lg border text-[11px] sm:text-xs ${
                         isAdded
                           ? 'bg-[#133322] border-[#10b981]/60 text-[#d1fae5]'
                           : 'bg-[#1c140f] border-[#422f22] text-[#e7d8c3]'
                       }`}
                     >
-                      <IngredientVisual id={req.ingredientId} size={22} className="shrink-0" />
+                      <IngredientVisual id={req.ingredientId} size={20} className="shrink-0" />
                       <div className="min-w-0 flex-1">
                         <div className="truncate font-medium">
                           {ing?.shortName ?? req.ingredientId}
                         </div>
-                        <div className="text-[11px] text-[#cbb08c] tabular-nums">
+                        <div className="text-[10px] sm:text-[11px] text-[#cbb08c] tabular-nums truncate">
                           {req.amount}
                         </div>
                       </div>
@@ -150,11 +150,11 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
               </div>
             </div>
           ) : (
-            <div className="mt-4 py-6 px-3 rounded-lg bg-[#1c140f] border border-[#3d2b1f] text-center">
+            <div className="mt-3 py-3 sm:py-6 px-3 rounded-lg bg-[#1c140f] border border-[#3d2b1f] text-center">
               <p className="text-xs text-[#cbb08c]">
                 {mode === 'shift'
-                  ? 'Smena rejimi: Xotirangizga tayanib masalliqlarni tanlang yoki yuqoridan yordamni oching.'
-                  : 'Retsept yashirilgan. Xohlasangiz "Retsept ko‘rish" tugmasini bosing.'}
+                  ? 'Smena rejimi: Xotirangizga tayanib masalliqlarni tanlang.'
+                  : 'Retsept yashirilgan. Ko‘rish uchun yuqoridagi tugmani bosing.'}
               </p>
             </div>
           )}
@@ -162,24 +162,24 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
       </div>
 
       {/* Right: Mixing Cup / Vessel / Serving & Evaluation */}
-      <div className="lg:col-span-7 border border-[#5a3d28] bg-[#241a14] rounded-xl p-4 flex flex-col justify-between">
+      <div className="lg:col-span-7 border border-[#5a3d28] bg-[#241a14] rounded-xl p-3 sm:p-4 flex flex-col justify-between">
         {evaluation ? (
           /* Evaluation Score Card out of 10 */
           <div data-testid="evaluation-card" className="flex flex-col justify-between h-full">
             <div>
-              <div className="flex items-center justify-between gap-4 pb-3 border-b border-[#3d2b1f]">
-                <div>
+              <div className="flex items-center justify-between gap-3 pb-2.5 sm:pb-3 border-b border-[#3d2b1f]">
+                <div className="min-w-0">
                   <div className="text-xs text-[#cbb08c]">
                     {customer.name} bahosi
                   </div>
-                  <h3 className="font-display text-xl font-bold text-[#fef3c7]">
+                  <h3 className="font-display text-lg sm:text-xl font-bold text-[#fef3c7]">
                     {evaluation.feedbackTitle}
                   </h3>
                 </div>
                 <div className="text-right shrink-0">
                   <div
                     data-testid="score-out-of-10"
-                    className={`font-mono-tabular text-3xl font-bold ${
+                    className={`font-mono-tabular text-2xl sm:text-3xl font-bold ${
                       evaluation.score === 10
                         ? 'text-[#10b981]'
                         : evaluation.score >= 7
@@ -196,7 +196,7 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
               </div>
 
               {/* Visual 10-star rating bar */}
-              <div className="flex items-center gap-1 my-3" aria-label={`10 dan ${evaluation.score} ball`}>
+              <div className="flex items-center gap-1 my-2.5 sm:my-3" aria-label={`10 dan ${evaluation.score} ball`}>
                 {Array.from({ length: 10 }, (_, idx) => {
                   const filled = idx < evaluation.score;
                   return (
@@ -243,7 +243,7 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
               )}
             </div>
 
-            <div className="mt-4 flex justify-end">
+            <div className="mt-4 hidden lg:flex justify-end">
               <button
                 type="button"
                 onClick={onNextOrder}
@@ -266,7 +266,7 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
                   <button
                     type="button"
                     onClick={onClearCup}
-                    className="inline-flex items-center gap-1 text-xs text-[#fca5a5] hover:text-[#fecaca] cursor-pointer whitespace-nowrap shrink-0"
+                    className="inline-flex items-center gap-1 text-xs text-[#fca5a5] hover:text-[#fecaca] cursor-pointer whitespace-nowrap shrink-0 py-1 px-1.5"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                     <span>Tozalash</span>
@@ -275,13 +275,13 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
               </div>
 
               {selectedIngredientIds.length === 0 ? (
-                <div className="min-h-20 flex items-center justify-center rounded-lg border border-dashed border-[#4a3222] bg-[#1c140f] px-4 py-4 text-xs text-[#a88b68] text-center">
+                <div className="min-h-14 sm:min-h-20 flex items-center justify-center rounded-lg border border-dashed border-[#4a3222] bg-[#1c140f] px-3 py-3 text-xs text-[#a88b68] text-center">
                   Pastdagi bo‘limlardan kerakli masalliqlarni tanlang.
                 </div>
               ) : (
                 <div
                   data-testid="added-ingredients-list"
-                  className="flex flex-wrap gap-2 max-h-28 overflow-y-auto p-1"
+                  className="flex lg:flex-wrap gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar lg:max-h-28 lg:overflow-y-auto p-0.5"
                 >
                   {selectedIngredientIds.map((id) => {
                     const ing = getIngredientById(id);
@@ -292,9 +292,9 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
                         type="button"
                         onClick={() => onRemoveIngredient(id)}
                         title="Olib tashlash uchun bosing"
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#2f2119] hover:bg-[#4a2822] border border-[#6e4c32] text-xs text-[#fef3c7] transition-colors cursor-pointer"
+                        className="min-h-[38px] inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#2f2119] hover:bg-[#4a2822] border border-[#6e4c32] text-xs text-[#fef3c7] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                       >
-                        <IngredientVisual id={id} size={20} className="shrink-0" />
+                        <IngredientVisual id={id} size={18} className="shrink-0" />
                         <span className="font-medium">{ing?.shortName ?? id}</span>
                         {mode === 'training' && req && (
                           <span className="text-[11px] text-[#f59e0b] tabular-nums">
@@ -311,9 +311,9 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
               )}
 
               {/* Vessel & Prep Method Selector */}
-              <div className="mt-3 pt-3 border-t border-[#3d2b1f] grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="mt-3 pt-2.5 sm:pt-3 border-t border-[#3d2b1f] grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                 <div>
-                  <div className="text-[11px] font-medium text-[#cbb08c] mb-1.5">
+                  <div className="text-[11px] font-medium text-[#cbb08c] mb-1">
                     Berish idishi:
                   </div>
                   <div className="grid grid-cols-2 gap-1.5">
@@ -322,7 +322,7 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
                         key={v}
                         type="button"
                         onClick={() => onSelectVessel(v)}
-                        className={`flex items-center gap-1.5 px-2 py-1.5 rounded-lg border text-[11px] font-medium transition-colors cursor-pointer text-left ${
+                        className={`min-h-[42px] sm:min-h-0 flex items-center gap-1.5 px-2 py-1.5 rounded-lg border text-[11px] font-medium transition-colors cursor-pointer text-left ${
                           selectedVessel === v
                             ? 'bg-[#362519] border-[#f59e0b] text-[#fef3c7]'
                             : 'bg-[#1c140f] border-[#422f22] text-[#cbb08c] hover:border-[#785438]'
@@ -336,7 +336,7 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
                 </div>
 
                 <div>
-                  <div className="text-[11px] font-medium text-[#cbb08c] mb-1.5">
+                  <div className="text-[11px] font-medium text-[#cbb08c] mb-1">
                     Tayyorlash usuli:
                   </div>
                   <div className="grid grid-cols-3 gap-1.5">
@@ -345,7 +345,7 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
                         key={p}
                         type="button"
                         onClick={() => onSelectPrep(p)}
-                        className={`flex flex-col items-center justify-center gap-0.5 px-1.5 py-1.5 rounded-lg border text-[11px] font-medium transition-colors cursor-pointer ${
+                        className={`min-h-[42px] sm:min-h-0 flex flex-col items-center justify-center gap-0.5 px-1.5 py-1.5 rounded-lg border text-[11px] font-medium transition-colors cursor-pointer ${
                           selectedPrep === p
                             ? 'bg-[#362519] border-[#f59e0b] text-[#fef3c7]'
                             : 'bg-[#1c140f] border-[#422f22] text-[#cbb08c] hover:border-[#785438]'
@@ -362,7 +362,7 @@ export const OrderPanel: React.FC<OrderPanelProps> = ({
               </div>
             </div>
 
-            <div className="mt-4 flex items-center justify-end gap-3">
+            <div className="mt-4 hidden lg:flex items-center justify-end gap-3">
               <button
                 type="button"
                 onClick={onServe}

@@ -45,39 +45,39 @@ export const RecipeBookModal: React.FC<RecipeBookModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="recipe-book-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80"
     >
-      <div className="w-full max-w-5xl max-h-[88vh] flex flex-col rounded-2xl border border-[#6e4c32] bg-[#1e1510] text-[#f7efe4] shadow-2xl">
+      <div className="w-full max-w-5xl max-h-[92vh] sm:max-h-[88vh] flex flex-col rounded-t-2xl sm:rounded-2xl border border-[#6e4c32] bg-[#1e1510] text-[#f7efe4] shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between gap-4 px-6 py-4 border-b border-[#3f2c1f]">
-          <div>
+        <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#3f2c1f]">
+          <div className="min-w-0">
             <h2
               id="recipe-book-title"
-              className="font-display text-xl md:text-2xl font-bold text-[#fef3c7]"
+              className="font-display text-lg sm:text-2xl font-bold text-[#fef3c7] truncate"
             >
               Kamolon Menyu va Retseptlar Kitobi
             </h2>
-            <p className="text-xs text-[#cbb08c] mt-0.5">
-              Barcha 30 ta ichimlik · Single shot espresso = 10 gr · Double shot espresso = 18 gr
+            <p className="text-[11px] sm:text-xs text-[#cbb08c] mt-0.5">
+              30 ta ichimlik · Single shot = 10 gr · Double shot = 18 gr
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
             aria-label="Retsept kitobini yopish"
-            className="p-2 rounded-lg bg-[#2f2119] hover:bg-[#3d2b20] border border-[#5a3d28] text-[#fef3c7] cursor-pointer"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg bg-[#2f2119] hover:bg-[#3d2b20] border border-[#5a3d28] text-[#fef3c7] cursor-pointer shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Category Filter & Search */}
-        <div className="px-6 py-3 border-b border-[#3f2c1f] flex flex-col md:flex-row md:items-center justify-between gap-3">
-          <div className="flex flex-wrap gap-1.5">
+        <div className="px-4 sm:px-6 py-3 border-b border-[#3f2c1f] flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-3">
+          <div className="flex md:flex-wrap gap-1.5 overflow-x-auto no-scrollbar pb-1 md:pb-0">
             <button
               type="button"
               onClick={() => setSelectedCat('all')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold border whitespace-nowrap shrink-0 cursor-pointer ${
+              className={`min-h-[40px] sm:min-h-0 px-3 py-1.5 rounded-lg text-xs font-semibold border whitespace-nowrap shrink-0 cursor-pointer ${
                 selectedCat === 'all'
                   ? 'bg-[#d97706] border-[#f59e0b] text-[#1b1410]'
                   : 'bg-[#241a14] border-[#4a3222] text-[#e7d8c3] hover:border-[#8c623d]'
@@ -90,7 +90,7 @@ export const RecipeBookModal: React.FC<RecipeBookModalProps> = ({
                 key={cat.id}
                 type="button"
                 onClick={() => setSelectedCat(cat.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border whitespace-nowrap shrink-0 cursor-pointer ${
+                className={`min-h-[40px] sm:min-h-0 px-3 py-1.5 rounded-lg text-xs font-semibold border whitespace-nowrap shrink-0 cursor-pointer ${
                   selectedCat === cat.id
                     ? 'bg-[#d97706] border-[#f59e0b] text-[#1b1410]'
                     : 'bg-[#241a14] border-[#4a3222] text-[#e7d8c3] hover:border-[#8c623d]'
@@ -109,7 +109,7 @@ export const RecipeBookModal: React.FC<RecipeBookModalProps> = ({
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Ichimlik yoki masalliq..."
               aria-label="Retsept qidirish"
-              className="w-full pl-9 pr-3 py-1.5 rounded-lg bg-[#241a14] border border-[#4a3222] focus:border-[#f59e0b] focus:outline-none text-xs text-[#fef3c7] placeholder:text-[#8c7355]"
+              className="w-full min-h-[40px] sm:min-h-0 pl-9 pr-3 py-1.5 rounded-lg bg-[#241a14] border border-[#4a3222] focus:border-[#f59e0b] focus:outline-none text-sm sm:text-xs text-[#fef3c7] placeholder:text-[#8c7355]"
             />
           </div>
         </div>

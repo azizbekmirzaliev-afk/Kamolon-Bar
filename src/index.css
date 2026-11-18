@@ -7,11 +7,14 @@
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   }
 
+  html,
   body {
     font-family: var(--font-sans);
     background-color: #1b1410;
     color: #f7efe4;
     overflow-x: hidden;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
@@ -27,6 +30,15 @@
 
 .tabular-nums {
   font-variant-numeric: tabular-nums;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Custom warm wood & brass scrollbar for pantry & recipe book */

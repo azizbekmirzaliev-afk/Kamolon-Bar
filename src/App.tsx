@@ -7,6 +7,9 @@ import {
   Volume2,
   VolumeX,
   Home,
+  Send,
+  ArrowRight,
+  Trash2,
 } from 'lucide-react';
 import { IngredientPantry } from './components/IngredientPantry';
 import { KamolonCanvas } from './components/KamolonCanvas';
@@ -328,46 +331,48 @@ export default function App() {
   return (
     <div className="min-h-screen w-full bg-[#1b1410] text-[#f7efe4] flex flex-col">
       {/* World-Matched Compact Game HUD Bar */}
-      <div className="w-full border-b border-[#4a3222] bg-[#241a14] px-4 py-2.5">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-4">
-            <span className="font-display text-lg font-bold tracking-wide text-[#fef3c7] whitespace-nowrap shrink-0">
+      <div className="w-full border-b border-[#4a3222] bg-[#241a14] px-3 sm:px-4 py-2 sm:py-2.5">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+            <span className="font-display text-base sm:text-lg font-bold tracking-wide text-[#fef3c7] whitespace-nowrap shrink-0">
               KAMOLON
             </span>
-            <span className="text-xs text-[#cbb08c] whitespace-nowrap">
+            <span className="hidden sm:inline text-xs text-[#cbb08c] whitespace-nowrap">
               {mode === 'training' ? 'O‘quv rejimi' : 'Smena rejimi'}
             </span>
           </div>
 
-          <div className="flex items-center gap-5 text-xs md:text-sm tabular-nums">
-            <div>
-              <span className="text-[#a88b68] mr-1.5">Buyurtma:</span>
+          <div className="flex items-center gap-3 sm:gap-5 text-xs sm:text-sm tabular-nums">
+            <div className="whitespace-nowrap">
+              <span className="hidden sm:inline text-[#a88b68] mr-1.5">Buyurtma:</span>
               <span className="font-mono-tabular font-bold text-[#fef3c7]">
                 {orderIndex + 1}/{orders.length}
               </span>
             </div>
-            <div>
+            <div className="hidden sm:block whitespace-nowrap">
               <span className="text-[#a88b68] mr-1.5">O‘rtacha:</span>
               <span className="font-mono-tabular font-bold text-[#f59e0b]">
                 {avgScore}
               </span>
             </div>
-            <div>
-              <span className="text-[#a88b68] mr-1.5">Ball:</span>
+            <div className="whitespace-nowrap">
+              <span className="text-[#a88b68] mr-1">Ball:</span>
               <span className="font-mono-tabular font-bold text-[#10b981]">
                 {totalPoints}
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <button
               type="button"
               onClick={() => setIsMenuOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#2f2119] hover:bg-[#3d2b20] border border-[#5a3d28] text-xs font-semibold text-[#fef3c7] whitespace-nowrap shrink-0 cursor-pointer"
+              aria-label="Menyu va retseptlar"
+              className="min-h-[42px] sm:min-h-0 inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#2f2119] hover:bg-[#3d2b20] border border-[#5a3d28] text-xs font-semibold text-[#fef3c7] whitespace-nowrap shrink-0 cursor-pointer"
             >
-              <BookOpen className="w-3.5 h-3.5 text-[#f59e0b]" />
-              <span>Menyu [M]</span>
+              <BookOpen className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-[#f59e0b]" />
+              <span className="hidden sm:inline">Menyu [M]</span>
+              <span className="sm:hidden">Menyu</span>
             </button>
 
             <button
@@ -378,7 +383,7 @@ export default function App() {
                 handleToggleMute();
               }}
               aria-label={muted ? 'Ovozni yoqish' : "Ovozni o'chirish"}
-              className="p-2 rounded-lg bg-[#2f2119] hover:bg-[#3d2b20] border border-[#5a3d28] text-[#fef3c7] cursor-pointer"
+              className="min-h-[42px] min-w-[42px] sm:min-h-0 sm:min-w-0 flex items-center justify-center p-2 rounded-lg bg-[#2f2119] hover:bg-[#3d2b20] border border-[#5a3d28] text-[#fef3c7] cursor-pointer"
             >
               {muted ? (
                 <VolumeX className="w-4 h-4 text-[#fca5a5]" />
@@ -395,7 +400,7 @@ export default function App() {
                 setGameState((s) => (s === 'paused' ? 'playing' : 'paused'));
               }}
               aria-label="Pauza [P]"
-              className="p-2 rounded-lg bg-[#2f2119] hover:bg-[#3d2b20] border border-[#5a3d28] text-[#fef3c7] cursor-pointer"
+              className="min-h-[42px] min-w-[42px] sm:min-h-0 sm:min-w-0 flex items-center justify-center p-2 rounded-lg bg-[#2f2119] hover:bg-[#3d2b20] border border-[#5a3d28] text-[#fef3c7] cursor-pointer"
             >
               <Pause className="w-4 h-4" />
             </button>
@@ -408,7 +413,7 @@ export default function App() {
                 startNewShift();
               }}
               aria-label="Qayta boshlash [R]"
-              className="p-2 rounded-lg bg-[#2f2119] hover:bg-[#3d2b20] border border-[#5a3d28] text-[#fef3c7] cursor-pointer"
+              className="hidden sm:flex items-center justify-center p-2 rounded-lg bg-[#2f2119] hover:bg-[#3d2b20] border border-[#5a3d28] text-[#fef3c7] cursor-pointer"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
@@ -416,8 +421,8 @@ export default function App() {
         </div>
       </div>
 
-      {/* Main Bar Workspace */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-4 flex flex-col gap-4">
+      {/* Main Bar Workspace (bottom padding reserves space for mobile sticky thumb bar) */}
+      <main className="flex-1 w-full max-w-7xl mx-auto px-3 sm:px-4 pt-3 pb-24 lg:py-4 flex flex-col gap-3 sm:gap-4">
         <KamolonCanvas
           gameState={gameState}
           targetStationX={targetStationX}
@@ -455,6 +460,65 @@ export default function App() {
           disabled={Boolean(evaluation) || gameState !== 'playing'}
         />
       </main>
+
+      {/* Mobile Sticky Bottom Thumb-Zone Action Bar (< lg, <= 64px height) */}
+      {currentOrder && !isMenuOpen && gameState === 'playing' && (
+        <div
+          data-testid="mobile-thumb-bar"
+          className="lg:hidden fixed bottom-0 left-0 right-0 z-30 border-t border-[#5a3d28] bg-[#1e1510]/95 px-3 py-2.5"
+        >
+          {evaluation ? (
+            <div className="flex items-center justify-between gap-3">
+              <div className="text-xs tabular-nums">
+                <span className="text-[#cbb08c]">Baho: </span>
+                <span className="font-mono-tabular font-bold text-[#f59e0b]">
+                  {evaluation.score}/10
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={handleNextOrder}
+                className="flex-1 max-w-[230px] h-11 inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-[#d97706] active:scale-[0.98] text-[#1b1410] font-bold text-sm transition-transform whitespace-nowrap cursor-pointer"
+              >
+                <span>
+                  {orderIndex + 1 >= orders.length
+                    ? 'Smena natijasi'
+                    : 'Keyingi mijoz'}
+                </span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between gap-2.5">
+              {selectedIngredientIds.length > 0 ? (
+                <button
+                  type="button"
+                  onClick={handleClearCup}
+                  aria-label="Stakanni tozalash"
+                  className="h-11 px-3 inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#2f2119] border border-[#5a3d28] text-xs font-semibold text-[#fca5a5] whitespace-nowrap shrink-0 cursor-pointer active:scale-95"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  <span>{selectedIngredientIds.length} ta</span>
+                </button>
+              ) : (
+                <div className="text-xs text-[#cbb08c] truncate">
+                  {currentOrder.recipe.name}
+                </div>
+              )}
+
+              <button
+                type="button"
+                onClick={handleServe}
+                disabled={selectedIngredientIds.length === 0}
+                className="flex-1 max-w-[230px] h-11 inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-[#d97706] active:scale-[0.98] disabled:bg-[#3f2c1f] disabled:text-[#8c7355] text-[#1b1410] font-bold text-sm transition-transform whitespace-nowrap cursor-pointer disabled:cursor-not-allowed"
+              >
+                <Send className="w-4 h-4" />
+                <span>Mijozga berish</span>
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Pause Modal */}
       {gameState === 'paused' && (
